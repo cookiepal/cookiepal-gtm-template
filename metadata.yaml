@@ -1,5 +1,9 @@
 homepage: "https://cookiepal.io/"
 documentation: "https://cookiepal.io/installation-guides"
 versions:
+  - sha: a3e9966bc8540157c1a39b516097515450367e4a
+    changeNotes: |2
+      beta release.
+      fix: rename .tpl file to template.tpl
   - sha: 877a5adf063cec3b55d8a3413344cef495d6460b
     changeNotes: beta release
