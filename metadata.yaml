@@ -1,0 +1,5 @@
+homepage: "https://cookiepal.io/"
+documentation: "https://cookiepal.io/installation-guides"
+versions:
+  - sha: 877a5adf063cec3b55d8a3413344cef495d6460b
+    changeNotes: beta release
