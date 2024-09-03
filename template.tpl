@@ -385,9 +385,6 @@ const logToConsole = require('logToConsole');
 const injectScript = require('injectScript');
 const queryPermission = require('queryPermission');
 const setDefaultConsentState = require('setDefaultConsentState');
-const updateConsentState = require('updateConsentState');
-const getCookieValues = require('getCookieValues');
-const callInWindow = require('callInWindow');
 const gtagSet = require('gtagSet');
 
 // Helpers
@@ -451,27 +448,6 @@ if (customRegions)
       }
     });
   }
-
-// Update consent
-
-const consentString = getCookieValues("cookiepal-consent", false)[0];
-if (consentString && typeof consentString === "string") {
-  const cookieObj = consentString.split(",").reduce(function (acc, curr) {
-    const cookieValue = curr.trim().split(":");
-    acc[cookieValue[0]] = getConsentState(cookieValue[1]);
-    return acc;
-  }, {});
-
-  updateConsentState({
-    ad_storage: cookieObj.advertisement,
-    analytics_storage: cookieObj.analytics,
-    functionality_storage: cookieObj.functional,
-    personalization_storage: cookieObj.functional,
-    security_storage: cookieObj.necessary,
-    ad_user_data: cookieObj.advertisement,
-    ad_personalization: cookieObj.advertisement,
-  });
-}
 
 
 // If the script loaded successfully, log a message and signal success
@@ -551,16 +527,6 @@ ___WEB_PERMISSIONS___
   {
     "instance": {
       "key": {
-        "publicId": "access_globals",
-        "versionId": "1"
-      },
-      "param": []
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
         "publicId": "write_data_layer",
         "versionId": "1"
       },
@@ -581,39 +547,6 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "developer_id.dMDc2ZT"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "clientAnnotations": {
-      "isEditedByUser": true
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
-        "publicId": "get_cookies",
-        "versionId": "1"
-      },
-      "param": [
-        {
-          "key": "cookieAccess",
-          "value": {
-            "type": 1,
-            "string": "specific"
-          }
-        },
-        {
-          "key": "cookieNames",
-          "value": {
-            "type": 2,
-            "listItem": [
-              {
-                "type": 1,
-                "string": "cookiepal-consent"
               }
             ]
           }
