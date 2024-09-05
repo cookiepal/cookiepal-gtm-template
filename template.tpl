@@ -380,12 +380,14 @@ ___TEMPLATE_PARAMETERS___
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 // APIs
-
+const JSON = require('JSON');
 const logToConsole = require('logToConsole');
 const injectScript = require('injectScript');
 const queryPermission = require('queryPermission');
 const setDefaultConsentState = require('setDefaultConsentState');
 const gtagSet = require('gtagSet');
+const callInWindow = require('callInWindow');
+const waitForTime = data.waitMs;
 
 // Helpers
 const splitInput = (input) => {
@@ -394,10 +396,7 @@ const splitInput = (input) => {
     .filter(entry => entry.length !== 0);
 };
 
-function getConsentState(categoryConsent) {
-  return categoryConsent === "yes" ? "granted" : "denied";
-}
-
+const getChoice = (choice) => choice === 'granted' ? 'granted' : 'denied';
 
 // Get settings from user input
 const websiteId = data.websiteId;
@@ -413,21 +412,20 @@ gtagSet({
 });
 
 const defaultConsentState = {
-    'security_storage': (data.defaultNecessary === 'granted' ? 'granted' : 'denied'),
-    'functionality_storage': (data.defaultFunctional === 'granted' ? 'granted' : 'denied'),
-    'personalization_storage': (data.defaultFunctional === 'granted' ? 'granted' : 'denied'),
-    'analytics_storage': (data.defaultAnalytics === 'granted' ? 'granted' : 'denied'),
-    'ad_storage': (data.defaultAdvertisement === 'granted' ? 'granted' : 'denied'),
-    'ad_user_data': (data.adUserData === 'granted' ? 'granted' : 'denied'),
-    'ad_personalization': (data.adPersonalization === 'granted' ? 'granted' : 'denied'),
-    'wait_for_update': data.waitMs
+    'security_storage': getChoice(data.defaultNecessary),
+    'functionality_storage': getChoice(data.defaultFunctional),
+    'personalization_storage': getChoice(data.defaultFunctional),
+    'analytics_storage': getChoice(data.defaultAnalytics),
+    'ad_storage': getChoice(data.defaultAdvertisement),
+    'ad_user_data': getChoice(data.adUserData),
+    'ad_personalization': getChoice(data.adPersonalization),
   };
 
-logToConsole('Default consent state',defaultConsentState);
-
-setDefaultConsentState(defaultConsentState);
-
-logToConsole('Website is',websiteId);
+const setDefaultConsentStateFn = (defaultConsentState) => {
+  const updatedConsentState = JSON.parse(JSON.stringify(defaultConsentState));
+  if (waitForTime > 0)  updatedConsentState.wait_for_update = waitForTime;
+  setDefaultConsentState(updatedConsentState);
+};
 
 if (customRegions)
   {
@@ -435,24 +433,56 @@ if (customRegions)
       logToConsole('Current region',currentRegion);
       const region = splitInput(currentRegion.region);
       if (region.length > 0) {
-        setDefaultConsentState({
-          'security_storage': (currentRegion.customNecessary === 'granted' ? 'granted' : 'denied'),
-          'functionality_storage': (currentRegion.customFunctional === 'granted' ? 'granted' : 'denied'),
-          'personalization_storage': (currentRegion.customFunctional === 'granted' ? 'granted' : 'denied'),
-          'analytics_storage': (currentRegion.customAnalytics === 'granted' ? 'granted' : 'denied'),
-          'ad_storage': (currentRegion.customAdvertisement === 'granted' ? 'granted' : 'denied'),
-          'ad_user_data': (currentRegion.customAdUserData === 'granted' ? 'granted' : 'denied'),
-          'ad_personalization': (currentRegion.customAdPersonalization === 'granted' ? 'granted' : 'denied'),
+        const defaultRegionConsentState = {
+        'security_storage': getChoice(currentRegion.customNecessary),
+          'functionality_storage': getChoice(currentRegion.customFunctional),
+          'personalization_storage': getChoice(currentRegion.customFunctional),
+          'analytics_storage': getChoice(currentRegion.customAnalytics),
+          'ad_storage': getChoice(currentRegion.customAdvertisement),
+          'ad_user_data': getChoice(currentRegion.customAdUserData),
+          'ad_personalization': getChoice(currentRegion.customAdPersonalization),
           'region': region
-        });
+        };
+        logToConsole('Inserting',defaultRegionConsentState,' on region ',region);
+        setDefaultConsentStateFn(defaultRegionConsentState);
       }
+      
     });
-  }
+  } 
 
+logToConsole('Global default consent state is',defaultConsentState);
+// Set global default consent state
+setDefaultConsentStateFn(defaultConsentState);
 
 // If the script loaded successfully, log a message and signal success
 const onSuccess = () => {
   logToConsole('Script loaded successfully.');
+  
+  if (queryPermission('access_globals', 'execute','cookiepal.setDefaultCommandGCM')) {
+    if (customRegions) {
+      customRegions.forEach(currentRegion => {
+        logToConsole('Current region',currentRegion);
+        const region = splitInput(currentRegion.region);
+        if (region.length > 0 && queryPermission('access_globals',   'execute','cookiepal.setDefaultCommandGCM')) {
+          const defaultRegionConsentState = {
+            'security_storage': getChoice(currentRegion.customNecessary),
+            'functionality_storage': getChoice(currentRegion.customFunctional),
+            'personalization_storage': getChoice(currentRegion.customFunctional),
+            'analytics_storage': getChoice(currentRegion.customAnalytics),
+            'ad_storage': getChoice(currentRegion.customAdvertisement),
+            'ad_user_data': getChoice(currentRegion.customAdUserData),
+            'ad_personalization': getChoice(currentRegion.customAdPersonalization),
+            'region': region
+        };    
+        callInWindow('cookiepal.setDefaultCommandGCM',defaultRegionConsentState);
+      }
+      });
+    } 
+    
+  callInWindow('cookiepal.setDefaultCommandGCM',defaultConsentState);
+  logToConsole('Executed');
+  }
+  
   data.gtmOnSuccess();
 };
 
@@ -462,8 +492,7 @@ const onFailure = () => {
   data.gtmOnFailure();
 };
 
-// If the URL input by the user matches the permissions set for the template,
-// inject the script with the onSuccess and onFailure methods as callbacks
+// Inject the script with the onSuccess and onFailure methods as callbacks
 const url = 'https://cdn.cookiepal.io/client_data/' + websiteId + '/script.js';
 if (queryPermission('inject_script', url)) {
   injectScript(url, onSuccess, onFailure);
@@ -794,6 +823,16 @@ ___WEB_PERMISSIONS___
     },
     "clientAnnotations": {
       "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "access_globals",
+        "versionId": "1"
+      },
+      "param": []
     },
     "isRequired": true
   }
