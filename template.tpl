@@ -380,15 +380,14 @@ ___TEMPLATE_PARAMETERS___
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 // APIs
-
+const JSON = require('JSON');
 const logToConsole = require('logToConsole');
 const injectScript = require('injectScript');
 const queryPermission = require('queryPermission');
 const setDefaultConsentState = require('setDefaultConsentState');
-const updateConsentState = require('updateConsentState');
-const getCookieValues = require('getCookieValues');
-const callInWindow = require('callInWindow');
 const gtagSet = require('gtagSet');
+const callInWindow = require('callInWindow');
+const waitForTime = data.waitMs;
 
 // Helpers
 const splitInput = (input) => {
@@ -397,10 +396,7 @@ const splitInput = (input) => {
     .filter(entry => entry.length !== 0);
 };
 
-function getConsentState(categoryConsent) {
-  return categoryConsent === "yes" ? "granted" : "denied";
-}
-
+const getChoice = (choice) => choice === 'granted' ? 'granted' : 'denied';
 
 // Get settings from user input
 const websiteId = data.websiteId;
@@ -416,21 +412,20 @@ gtagSet({
 });
 
 const defaultConsentState = {
-    'security_storage': (data.defaultNecessary === 'granted' ? 'granted' : 'denied'),
-    'functionality_storage': (data.defaultFunctional === 'granted' ? 'granted' : 'denied'),
-    'personalization_storage': (data.defaultFunctional === 'granted' ? 'granted' : 'denied'),
-    'analytics_storage': (data.defaultAnalytics === 'granted' ? 'granted' : 'denied'),
-    'ad_storage': (data.defaultAdvertisement === 'granted' ? 'granted' : 'denied'),
-    'ad_user_data': (data.adUserData === 'granted' ? 'granted' : 'denied'),
-    'ad_personalization': (data.adPersonalization === 'granted' ? 'granted' : 'denied'),
-    'wait_for_update': data.waitMs
+    'security_storage': getChoice(data.defaultNecessary),
+    'functionality_storage': getChoice(data.defaultFunctional),
+    'personalization_storage': getChoice(data.defaultFunctional),
+    'analytics_storage': getChoice(data.defaultAnalytics),
+    'ad_storage': getChoice(data.defaultAdvertisement),
+    'ad_user_data': getChoice(data.adUserData),
+    'ad_personalization': getChoice(data.adPersonalization),
   };
 
-logToConsole('Default consent state',defaultConsentState);
-
-setDefaultConsentState(defaultConsentState);
-
-logToConsole('Website is',websiteId);
+const setDefaultConsentStateFn = (defaultConsentState) => {
+  const updatedConsentState = JSON.parse(JSON.stringify(defaultConsentState));
+  if (waitForTime > 0)  updatedConsentState.wait_for_update = waitForTime;
+  setDefaultConsentState(updatedConsentState);
+};
 
 if (customRegions)
   {
@@ -438,45 +433,56 @@ if (customRegions)
       logToConsole('Current region',currentRegion);
       const region = splitInput(currentRegion.region);
       if (region.length > 0) {
-        setDefaultConsentState({
-          'security_storage': (currentRegion.customNecessary === 'granted' ? 'granted' : 'denied'),
-          'functionality_storage': (currentRegion.customFunctional === 'granted' ? 'granted' : 'denied'),
-          'personalization_storage': (currentRegion.customFunctional === 'granted' ? 'granted' : 'denied'),
-          'analytics_storage': (currentRegion.customAnalytics === 'granted' ? 'granted' : 'denied'),
-          'ad_storage': (currentRegion.customAdvertisement === 'granted' ? 'granted' : 'denied'),
-          'ad_user_data': (currentRegion.customAdUserData === 'granted' ? 'granted' : 'denied'),
-          'ad_personalization': (currentRegion.customAdPersonalization === 'granted' ? 'granted' : 'denied'),
+        const defaultRegionConsentState = {
+        'security_storage': getChoice(currentRegion.customNecessary),
+          'functionality_storage': getChoice(currentRegion.customFunctional),
+          'personalization_storage': getChoice(currentRegion.customFunctional),
+          'analytics_storage': getChoice(currentRegion.customAnalytics),
+          'ad_storage': getChoice(currentRegion.customAdvertisement),
+          'ad_user_data': getChoice(currentRegion.customAdUserData),
+          'ad_personalization': getChoice(currentRegion.customAdPersonalization),
           'region': region
-        });
+        };
+        logToConsole('Inserting',defaultRegionConsentState,' on region ',region);
+        setDefaultConsentStateFn(defaultRegionConsentState);
       }
+      
     });
-  }
+  } 
 
-// Update consent
-
-const consentString = getCookieValues("cookiepal-consent", false)[0];
-if (consentString && typeof consentString === "string") {
-  const cookieObj = consentString.split(",").reduce(function (acc, curr) {
-    const cookieValue = curr.trim().split(":");
-    acc[cookieValue[0]] = getConsentState(cookieValue[1]);
-    return acc;
-  }, {});
-
-  updateConsentState({
-    ad_storage: cookieObj.advertisement,
-    analytics_storage: cookieObj.analytics,
-    functionality_storage: cookieObj.functional,
-    personalization_storage: cookieObj.functional,
-    security_storage: cookieObj.necessary,
-    ad_user_data: cookieObj.advertisement,
-    ad_personalization: cookieObj.advertisement,
-  });
-}
-
+logToConsole('Global default consent state is',defaultConsentState);
+// Set global default consent state
+setDefaultConsentStateFn(defaultConsentState);
 
 // If the script loaded successfully, log a message and signal success
 const onSuccess = () => {
   logToConsole('Script loaded successfully.');
+  
+  if (queryPermission('access_globals', 'execute','cookiepal.setDefaultCommandGCM')) {
+    if (customRegions) {
+      customRegions.forEach(currentRegion => {
+        logToConsole('Current region',currentRegion);
+        const region = splitInput(currentRegion.region);
+        if (region.length > 0 && queryPermission('access_globals',   'execute','cookiepal.setDefaultCommandGCM')) {
+          const defaultRegionConsentState = {
+            'security_storage': getChoice(currentRegion.customNecessary),
+            'functionality_storage': getChoice(currentRegion.customFunctional),
+            'personalization_storage': getChoice(currentRegion.customFunctional),
+            'analytics_storage': getChoice(currentRegion.customAnalytics),
+            'ad_storage': getChoice(currentRegion.customAdvertisement),
+            'ad_user_data': getChoice(currentRegion.customAdUserData),
+            'ad_personalization': getChoice(currentRegion.customAdPersonalization),
+            'region': region
+        };    
+        callInWindow('cookiepal.setDefaultCommandGCM',defaultRegionConsentState);
+      }
+      });
+    } 
+    
+  callInWindow('cookiepal.setDefaultCommandGCM',defaultConsentState);
+  logToConsole('Executed');
+  }
+  
   data.gtmOnSuccess();
 };
 
@@ -486,8 +492,7 @@ const onFailure = () => {
   data.gtmOnFailure();
 };
 
-// If the URL input by the user matches the permissions set for the template,
-// inject the script with the onSuccess and onFailure methods as callbacks
+// Inject the script with the onSuccess and onFailure methods as callbacks
 const url = 'https://cdn.cookiepal.io/client_data/' + websiteId + '/script.js';
 if (queryPermission('inject_script', url)) {
   injectScript(url, onSuccess, onFailure);
@@ -551,16 +556,6 @@ ___WEB_PERMISSIONS___
   {
     "instance": {
       "key": {
-        "publicId": "access_globals",
-        "versionId": "1"
-      },
-      "param": []
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
         "publicId": "write_data_layer",
         "versionId": "1"
       },
@@ -581,39 +576,6 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "developer_id.dMDc2ZT"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "clientAnnotations": {
-      "isEditedByUser": true
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
-        "publicId": "get_cookies",
-        "versionId": "1"
-      },
-      "param": [
-        {
-          "key": "cookieAccess",
-          "value": {
-            "type": 1,
-            "string": "specific"
-          }
-        },
-        {
-          "key": "cookieNames",
-          "value": {
-            "type": 2,
-            "listItem": [
-              {
-                "type": 1,
-                "string": "cookiepal-consent"
               }
             ]
           }
@@ -863,6 +825,67 @@ ___WEB_PERMISSIONS___
       "isEditedByUser": true
     },
     "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "access_globals",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "keys",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "cookiepal.setDefaultCommandGCM"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
   }
 ]
 
@@ -875,4 +898,3 @@ scenarios: []
 ___NOTES___
 
 Created on 29/06/2022, 23:29:56
-
