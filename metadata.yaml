@@ -2,11 +2,9 @@ homepage: "https://cookiepal.io/"
 documentation: "https://cookiepal.io/installation-guides"
 versions:
   # latest version
-  - sha: 0c1bdba35394eb292487a5bab237b04c1e7b4411
-    changeNotes: New implementation of the cookie banner
-  # previous versions
   - sha: 198e66ab3463f0cd7fb4699a107765438238ea23
     changeNotes: Default consent - custom & regions
+  # previous versions
   - sha: a3e9966bc8540157c1a39b516097515450367e4a
     changeNotes: |2
       beta release.
