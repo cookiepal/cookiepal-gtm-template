@@ -1,10 +1,10 @@
 homepage: "https://cookiepal.io/"
 documentation: "https://cookiepal.io/installation-guides"
 versions:
-  # latest version
+  - sha: ab6f520cb2286c22c624d2726ca285a137438bb6
+    changeNotes: Update template with additional compliance fixes
   - sha: 198e66ab3463f0cd7fb4699a107765438238ea23
     changeNotes: Default consent - custom & regions
-  # previous versions
   - sha: a3e9966bc8540157c1a39b516097515450367e4a
     changeNotes: |2
       beta release.
