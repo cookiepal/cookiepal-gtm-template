@@ -1,6 +1,8 @@
 homepage: "https://cookiepal.io/"
 documentation: "https://cookiepal.io/installation-guides"
 versions:
+  - sha: 449b9a54ba97c7fd864d64577550d5ef9880a9fe
+    changeNotes: add encodeUri to script URI construction
   - sha: ab6f520cb2286c22c624d2726ca285a137438bb6
     changeNotes: Update template with additional compliance fixes
   - sha: 198e66ab3463f0cd7fb4699a107765438238ea23
