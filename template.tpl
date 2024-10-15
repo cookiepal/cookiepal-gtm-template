@@ -1,4 +1,4 @@
-﻿___TERMS_OF_SERVICE___
+﻿﻿___TERMS_OF_SERVICE___
 
 By creating or modifying this file you agree to Google Tag Manager's Community
 Template Gallery Developer Terms of Service available at
@@ -381,6 +381,7 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 // APIs
 const JSON = require('JSON');
+const encodeUri = require("encodeUri");
 const logToConsole = require('logToConsole');
 const injectScript = require('injectScript');
 const queryPermission = require('queryPermission');
@@ -493,7 +494,8 @@ const onFailure = () => {
 };
 
 // Inject the script with the onSuccess and onFailure methods as callbacks
-const url = 'https://cdn.cookiepal.io/client_data/' + websiteId + '/script.js';
+const url = 'https://cdn.cookiepal.io/client_data/' + encodeUri(websiteId + '/script.js');
+
 if (queryPermission('inject_script', url)) {
   injectScript(url, onSuccess, onFailure);
   return;
