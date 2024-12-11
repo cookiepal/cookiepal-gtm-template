@@ -458,32 +458,6 @@ setDefaultConsentStateFn(defaultConsentState);
 // If the script loaded successfully, log a message and signal success
 const onSuccess = () => {
   logToConsole('Script loaded successfully.');
-  
-  if (queryPermission('access_globals', 'execute','cookiepal.setDefaultCommandGCM')) {
-    if (customRegions) {
-      customRegions.forEach(currentRegion => {
-        logToConsole('Current region',currentRegion);
-        const region = splitInput(currentRegion.region);
-        if (region.length > 0 && queryPermission('access_globals',   'execute','cookiepal.setDefaultCommandGCM')) {
-          const defaultRegionConsentState = {
-            'security_storage': getChoice(currentRegion.customNecessary),
-            'functionality_storage': getChoice(currentRegion.customFunctional),
-            'personalization_storage': getChoice(currentRegion.customFunctional),
-            'analytics_storage': getChoice(currentRegion.customAnalytics),
-            'ad_storage': getChoice(currentRegion.customAdvertisement),
-            'ad_user_data': getChoice(currentRegion.customAdUserData),
-            'ad_personalization': getChoice(currentRegion.customAdPersonalization),
-            'region': region
-        };    
-        callInWindow('cookiepal.setDefaultCommandGCM',defaultRegionConsentState);
-      }
-      });
-    } 
-    
-  callInWindow('cookiepal.setDefaultCommandGCM',defaultConsentState);
-  logToConsole('Executed');
-  }
-  
   data.gtmOnSuccess();
 };
 
