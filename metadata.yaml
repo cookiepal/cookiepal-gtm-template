@@ -1,6 +1,8 @@
 homepage: "https://cookiepal.io/"
 documentation: "https://cookiepal.io/installation-guides"
 versions:
+  - sha: cefb925a2b08c56e4232a908f6c12345b75fbb2d
+    changeNotes: Remove logic setting default command twice
   - sha: 449b9a54ba97c7fd864d64577550d5ef9880a9fe
     changeNotes: add encodeUri to script URI construction
   - sha: ab6f520cb2286c22c624d2726ca285a137438bb6
