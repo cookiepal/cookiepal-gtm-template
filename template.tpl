@@ -387,6 +387,7 @@ const injectScript = require('injectScript');
 const queryPermission = require('queryPermission');
 const setDefaultConsentState = require('setDefaultConsentState');
 const gtagSet = require('gtagSet');
+const setInWindow = require('setInWindow');
 const callInWindow = require('callInWindow');
 const waitForTime = data.waitMs;
 
@@ -457,6 +458,7 @@ setDefaultConsentStateFn(defaultConsentState);
 
 // If the script loaded successfully, log a message and signal success
 const onSuccess = () => {
+  setInWindow('fromGtm', true , true); 
   logToConsole('Script loaded successfully.');
   data.gtmOnSuccess();
 };
@@ -837,15 +839,15 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "cookiepal.setDefaultCommandGCM"
+                    "string": "fromGtm"
                   },
                   {
                     "type": 8,
-                    "boolean": false
+                    "boolean": true
                   },
                   {
                     "type": 8,
-                    "boolean": false
+                    "boolean": true
                   },
                   {
                     "type": 8,
