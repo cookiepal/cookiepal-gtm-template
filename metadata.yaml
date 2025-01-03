@@ -1,6 +1,8 @@
 homepage: "https://cookiepal.io/"
 documentation: "https://cookiepal.io/installation-guides"
 versions:
+  - sha: 5282ca8b959560d7925f6a624fcc8676abaead22
+    changeNotes: Add flag to detect script installation through gcm
   - sha: cefb925a2b08c56e4232a908f6c12345b75fbb2d
     changeNotes: Remove logic setting default command twice
   - sha: 449b9a54ba97c7fd864d64577550d5ef9880a9fe
