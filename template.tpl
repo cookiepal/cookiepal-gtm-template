@@ -458,7 +458,6 @@ setDefaultConsentStateFn(defaultConsentState);
 
 // If the script loaded successfully, log a message and signal success
 const onSuccess = () => {
-  setInWindow('fromGtm', true , true); 
   logToConsole('Script loaded successfully.');
   data.gtmOnSuccess();
 };
@@ -470,7 +469,7 @@ const onFailure = () => {
 };
 
 // Inject the script with the onSuccess and onFailure methods as callbacks
-const url = 'https://cdn.cookiepal.io/client_data/' + encodeUri(websiteId + '/script.js');
+const url = 'https://cdn.cookiepal.io/client_data/' + encodeUri(websiteId + '/script.js?source=gtm');
 
 if (queryPermission('inject_script', url)) {
   injectScript(url, onSuccess, onFailure);
@@ -810,55 +809,7 @@ ___WEB_PERMISSIONS___
         "publicId": "access_globals",
         "versionId": "1"
       },
-      "param": [
-        {
-          "key": "keys",
-          "value": {
-            "type": 2,
-            "listItem": [
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "fromGtm"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      ]
+      "param": []
     },
     "clientAnnotations": {
       "isEditedByUser": true
