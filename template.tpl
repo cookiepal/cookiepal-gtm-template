@@ -1,4 +1,4 @@
-﻿﻿___TERMS_OF_SERVICE___
+﻿___TERMS_OF_SERVICE___
 
 By creating or modifying this file you agree to Google Tag Manager's Community
 Template Gallery Developer Terms of Service available at
@@ -12,7 +12,6 @@ ___INFO___
   "type": "TAG",
   "id": "cvt_temp_public_id",
   "version": 1,
-  "securityGroups": [],
   "displayName": "CookiePal CMP",
   "categories": [
     "TAG_MANAGEMENT",
@@ -26,7 +25,8 @@ ___INFO___
   "description": "CookiePal is a comprehensive and user-friendly Consent Management Platform (CMP) that offers all the necessary tools to ensure your website complies with GDPR.",
   "containerContexts": [
     "WEB"
-  ]
+  ],
+  "securityGroups": []
 }
 
 
@@ -35,342 +35,201 @@ ___TEMPLATE_PARAMETERS___
 [
   {
     "type": "TEXT",
-    "name": "websiteId",
-    "displayName": "Website Id",
+    "name": "websiteKey",
+    "displayName": "Website ID",
     "simpleValueType": true,
-    "help": "The website id of your cookiepal account.",
+    "help": "Log in to your CookiePal account \u003e On the Dashboard, select the correct site (if you have more than one) \u003e In the left menu, click Settings \u003e Click Copy Website ID",
     "notSetText": "This field is required.",
     "valueValidators": [
       {
         "type": "NON_EMPTY"
       }
     ],
-    "valueHint": "Your website id"
+    "valueHint": "Your website ID"
   },
   {
     "type": "GROUP",
-    "name": "defaultSettings",
-    "displayName": "Default Values (Applied to all regions)",
-    "groupStyle": "ZIPPY_CLOSED",
+    "name": "group1",
+    "displayName": "Default Consent Settings",
+    "groupStyle": "ZIPPY_OPEN_ON_PARAM",
     "subParams": [
       {
-        "type": "RADIO",
-        "name": "defaultNecessary",
-        "displayName": "Necessary",
-        "radioItems": [
+        "type": "PARAM_TABLE",
+        "name": "regionSettings",
+        "paramTableColumns": [
           {
-            "value": "granted",
-            "displayValue": "Granted"
+            "param": {
+              "type": "SELECT",
+              "name": "analytics",
+              "displayName": "Analytics Cookies",
+              "macrosInSelect": true,
+              "selectItems": [
+                {
+                  "value": "granted",
+                  "displayValue": "Enabled"
+                },
+                {
+                  "value": "denied",
+                  "displayValue": "Disabled"
+                }
+              ],
+              "simpleValueType": true
+            },
+            "isUnique": false
           },
           {
-            "value": "denied",
-            "displayValue": "Denied"
-          }
-        ],
-        "simpleValueType": true,
-        "defaultValue": "granted"
-      },
-      {
-        "type": "RADIO",
-        "name": "defaultFunctional",
-        "displayName": "Functional",
-        "radioItems": [
-          {
-            "value": "granted",
-            "displayValue": "Granted"
+            "param": {
+              "type": "SELECT",
+              "name": "advertisement",
+              "displayName": "Advertisement Cookies",
+              "macrosInSelect": true,
+              "selectItems": [
+                {
+                  "value": "granted",
+                  "displayValue": "Enabled"
+                },
+                {
+                  "value": "denied",
+                  "displayValue": "Disabled"
+                }
+              ],
+              "simpleValueType": true
+            },
+            "isUnique": false
           },
           {
-            "value": "denied",
-            "displayValue": "Denied"
-          }
-        ],
-        "simpleValueType": true,
-        "defaultValue": "denied"
-      },
-      {
-        "type": "RADIO",
-        "name": "defaultAnalytics",
-        "displayName": "Analytics",
-        "radioItems": [
-          {
-            "value": "granted",
-            "displayValue": "Granted"
+            "param": {
+              "type": "SELECT",
+              "name": "functional",
+              "displayName": "Functional Cookies",
+              "macrosInSelect": true,
+              "selectItems": [
+                {
+                  "value": "granted",
+                  "displayValue": "Enabled"
+                },
+                {
+                  "value": "denied",
+                  "displayValue": "Disabled"
+                }
+              ],
+              "simpleValueType": true
+            },
+            "isUnique": false
           },
           {
-            "value": "denied",
-            "displayValue": "Denied"
-          }
-        ],
-        "simpleValueType": true,
-        "defaultValue": "denied"
-      },
-      {
-        "type": "RADIO",
-        "name": "defaultPerformance",
-        "displayName": "Performance",
-        "radioItems": [
-          {
-            "value": "granted",
-            "displayValue": "Granted"
+            "param": {
+              "type": "SELECT",
+              "name": "security",
+              "displayName": "Necessary Cookies",
+              "selectItems": [
+                {
+                  "value": "granted",
+                  "displayValue": "Enabled"
+                },
+                {
+                  "value": "denied",
+                  "displayValue": "Disabled"
+                }
+              ],
+              "simpleValueType": true,
+              "macrosInSelect": true
+            },
+            "isUnique": false
           },
           {
-            "value": "denied",
-            "displayValue": "Denied"
-          }
-        ],
-        "simpleValueType": true,
-        "defaultValue": "denied"
-      },
-      {
-        "type": "RADIO",
-        "name": "defaultAdvertisement",
-        "displayName": "Advertisement",
-        "radioItems": [
-          {
-            "value": "granted",
-            "displayValue": "Granted"
+            "param": {
+              "type": "SELECT",
+              "name": "adUserData",
+              "displayName": "Share user data with Google",
+              "macrosInSelect": true,
+              "selectItems": [
+                {
+                  "value": "granted",
+                  "displayValue": "Enabled"
+                },
+                {
+                  "value": "denied",
+                  "displayValue": "Disabled"
+                }
+              ],
+              "simpleValueType": true
+            },
+            "isUnique": false
           },
           {
-            "value": "denied",
-            "displayValue": "Denied"
-          }
-        ],
-        "simpleValueType": true,
-        "defaultValue": "denied"
-      },
-      {
-        "type": "RADIO",
-        "name": "adUserData",
-        "displayName": "Sending user data related to advertising to Google (ad_user_data)",
-        "radioItems": [
-          {
-            "value": "granted",
-            "displayValue": "Granted"
+            "param": {
+              "type": "SELECT",
+              "name": "adPersonal",
+              "displayName": "Use data for ads personalization",
+              "macrosInSelect": true,
+              "selectItems": [
+                {
+                  "value": "granted",
+                  "displayValue": "Enabled"
+                },
+                {
+                  "value": "denied",
+                  "displayValue": "Disabled"
+                }
+              ],
+              "simpleValueType": true
+            },
+            "isUnique": false
           },
           {
-            "value": "denied",
-            "displayValue": "Denied"
+            "param": {
+              "type": "TEXT",
+              "name": "regions",
+              "displayName": "Regions",
+              "simpleValueType": true,
+              "defaultValue": "All",
+              "help": "Specify a comma-separated list of \u003ca href\u003d\"https://en.wikipedia.org/wiki/ISO_3166-2\"\u003eregions\u003c/a\u003e for which you want to apply this setting. If you specify All, the setting will be applied to all users."
+            },
+            "isUnique": false
           }
         ],
-        "simpleValueType": true,
-        "defaultValue": "denied"
-      },
-      {
-        "type": "RADIO",
-        "name": "adPersonalization",
-        "displayName": "Personalized advertising (ad_personalization)",
-        "radioItems": [
-          {
-            "value": "granted",
-            "displayValue": "Granted"
-          },
-          {
-            "value": "denied",
-            "displayValue": "Denied"
-          }
-        ],
-        "simpleValueType": true,
-        "defaultValue": "denied"
+        "newRowButtonText": "Add Setting"
       }
     ]
   },
   {
     "type": "GROUP",
-    "name": "customSettings",
-    "displayName": "Custom Settings",
-    "groupStyle": "ZIPPY_CLOSED",
+    "name": "otherSettings",
+    "displayName": "Other Settings",
+    "groupStyle": "ZIPPY_OPEN_ON_PARAM",
     "subParams": [
       {
-        "type": "PARAM_TABLE",
-        "name": "customRegions",
-        "displayName": "",
-        "paramTableColumns": [
-          {
-            "param": {
-              "type": "TEXT",
-              "name": "region",
-              "displayName": "Region",
-              "simpleValueType": true
-            },
-            "isUnique": true
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customNecessary",
-              "displayName": "Necessary",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "granted"
-            },
-            "isUnique": false
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customFunctional",
-              "displayName": "Functional",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "denied"
-            },
-            "isUnique": false
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customAnalytics",
-              "displayName": "Analytics",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "denied"
-            },
-            "isUnique": false
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customPerformance",
-              "displayName": "Performance",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "denied"
-            },
-            "isUnique": false
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customAdvertisement",
-              "displayName": "Advertisement",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "denied"
-            },
-            "isUnique": false
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customAdUserData",
-              "displayName": "Sending user data related to advertising to Google (ad_user_data)",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "denied"
-            },
-            "isUnique": false
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customAdPersonalization",
-              "displayName": "Personalized advertising (ad_personalization)",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "denied"
-            },
-            "isUnique": false
-          }
-        ]
-      },
-      {
         "type": "TEXT",
-        "name": "waitMs",
+        "name": "waitForTime",
         "displayName": "Wait for update",
         "simpleValueType": true,
-        "defaultValue": 2000,
+        "help": "Set the number of milliseconds to wait before firing tags waiting for consent.",
         "valueValidators": [
           {
-            "type": "POSITIVE_NUMBER"
+            "type": "POSITIVE_NUMBER",
+            "enablingConditions": []
           },
           {
             "type": "NON_EMPTY"
           }
         ],
-        "valueUnit": "milliseconds",
-        "help": "Set the delay, in milliseconds, before triggering tags."
-      },
-      {
-        "type": "CHECKBOX",
-        "name": "adsRedaction",
-        "checkboxText": "Redact Ads Data",
-        "simpleValueType": true
+        "defaultValue": 2000,
+        "valueUnit": "milliseconds"
       },
       {
         "type": "CHECKBOX",
         "name": "urlPassThrough",
         "checkboxText": "Pass ad click information through URLs",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "help": "Check this option if you would like internal links to include advertising identifiers in their URLs while waiting for consent to be granted."
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "adsRedaction",
+        "checkboxText": "Redact ads data",
+        "simpleValueType": true,
+        "help": "When this option is checked and the default consent state of \"Advertisement Cookies\" is disabled, Google\u0027s advertising tags will remove all advertising identifiers from the requests, and route the traffic through domains that do not use cookies."
       }
     ]
   }
@@ -379,105 +238,96 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-// APIs
-const JSON = require('JSON');
+const injectScript = require("injectScript");
+const queryPermission = require("queryPermission");
+const setDefaultConsentState = require("setDefaultConsentState");
 const encodeUri = require("encodeUri");
-const logToConsole = require('logToConsole');
-const injectScript = require('injectScript');
-const queryPermission = require('queryPermission');
-const setDefaultConsentState = require('setDefaultConsentState');
-const gtagSet = require('gtagSet');
-const setInWindow = require('setInWindow');
-const callInWindow = require('callInWindow');
-const waitForTime = data.waitMs;
+const gtagSet = require("gtagSet");
+const getCookieValues = require("getCookieValues");
+const updateConsentState = require("updateConsentState");
 
-// Helpers
-const splitInput = (input) => {
-  return input.split(',')
-    .map(entry => entry.trim())
-    .filter(entry => entry.length !== 0);
-};
+let setDefaultSetting = true;
+const regionSettings = data.regionSettings || [];
+const waitForTime = data.waitForTime;
 
-const getChoice = (choice) => choice === 'granted' ? 'granted' : 'denied';
+function getConsentStateForCategory(categoryConsent) {
+  return (categoryConsent + "").toLowerCase() === "yes" ? "granted" : "denied";
+}
 
-// Get settings from user input
-const websiteId = data.websiteId;
-const customRegions = data.customRegions;
-logToConsole('Data is',data);
-logToConsole('Custom regions',customRegions);
+function setConsentInitStates(consentData) {
+  if (waitForTime > 0) consentData.wait_for_update = waitForTime;
+  setDefaultConsentState(consentData);
+}
 
-// Set gtag 
 gtagSet({
   ads_data_redaction: !!data.adsRedaction,
   url_passthrough: !!data.urlPassThrough,
-  'developer_id.dMDc2ZT': true
+  "developer_id.dMDc2ZT": true,
 });
 
-const defaultConsentState = {
-    'security_storage': getChoice(data.defaultNecessary),
-    'functionality_storage': getChoice(data.defaultFunctional),
-    'personalization_storage': getChoice(data.defaultFunctional),
-    'analytics_storage': getChoice(data.defaultAnalytics),
-    'ad_storage': getChoice(data.defaultAdvertisement),
-    'ad_user_data': getChoice(data.adUserData),
-    'ad_personalization': getChoice(data.adPersonalization),
+for (let index = 0; index < regionSettings.length; index++) {
+  const regionSetting = regionSettings[index];
+  const consentRegionData = {
+    ad_storage:            getConsentStateForCategory(regionSetting.advertisement),
+    analytics_storage:     getConsentStateForCategory(regionSetting.analytics),
+    functionality_storage: getConsentStateForCategory(regionSetting.functional),
+    personalization_storage: getConsentStateForCategory(regionSetting.functional),
+    security_storage:      getConsentStateForCategory(regionSetting.security),
+    ad_user_data:          getConsentStateForCategory(regionSetting.adUserData),
+    ad_personalization:    getConsentStateForCategory(regionSetting.adPersonal),
   };
 
-const setDefaultConsentStateFn = (defaultConsentState) => {
-  const updatedConsentState = JSON.parse(JSON.stringify(defaultConsentState));
-  if (waitForTime > 0)  updatedConsentState.wait_for_update = waitForTime;
-  setDefaultConsentState(updatedConsentState);
-};
+  const regionsToSetFor = (regionSetting.regions || "")
+    .split(",")
+    .map((r) => r.trim())
+    .filter((region) => region);
 
-if (customRegions)
-  {
-    customRegions.forEach(currentRegion => {
-      logToConsole('Current region',currentRegion);
-      const region = splitInput(currentRegion.region);
-      if (region.length > 0) {
-        const defaultRegionConsentState = {
-        'security_storage': getChoice(currentRegion.customNecessary),
-          'functionality_storage': getChoice(currentRegion.customFunctional),
-          'personalization_storage': getChoice(currentRegion.customFunctional),
-          'analytics_storage': getChoice(currentRegion.customAnalytics),
-          'ad_storage': getChoice(currentRegion.customAdvertisement),
-          'ad_user_data': getChoice(currentRegion.customAdUserData),
-          'ad_personalization': getChoice(currentRegion.customAdPersonalization),
-          'region': region
-        };
-        logToConsole('Inserting',defaultRegionConsentState,' on region ',region);
-        setDefaultConsentStateFn(defaultRegionConsentState);
-      }
-      
-    });
-  } 
+  if (regionsToSetFor.length > 0 && regionsToSetFor[0].toLowerCase() !== "all") {
+    consentRegionData.region = regionsToSetFor;
+  } else {
+    setDefaultSetting = false; // “all” → don’t apply global default later
+  }
 
-logToConsole('Global default consent state is',defaultConsentState);
-// Set global default consent state
-setDefaultConsentStateFn(defaultConsentState);
-
-// If the script loaded successfully, log a message and signal success
-const onSuccess = () => {
-  logToConsole('Script loaded successfully.');
-  data.gtmOnSuccess();
-};
-
-// If the script fails to load, log a message and signal failure
-const onFailure = () => {
-  logToConsole('Script load failed.');
-  data.gtmOnFailure();
-};
-
-// Inject the script with the onSuccess and onFailure methods as callbacks
-const url = 'https://cdn.cookiepal.io/client_data/' + encodeUri(websiteId + '/script.js?source=gtm');
-
-if (queryPermission('inject_script', url)) {
-  injectScript(url, onSuccess, onFailure);
-  return;
+  setConsentInitStates(consentRegionData);
 }
 
-logToConsole('Script load failed due to permissions mismatch.');
-data.gtmOnFailure();
+if (setDefaultSetting) {
+  setConsentInitStates({
+    ad_storage: "denied",
+    analytics_storage: "denied",
+    functionality_storage: "denied",
+    personalization_storage: "denied",
+    security_storage: "granted",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
+}
+
+const consentString = getCookieValues("cookiepal-consent", false)[0];
+if (consentString && typeof consentString === "string") {
+  const cookieObj = consentString.split(",").reduce(function (acc, curr) {
+    const cookieValue = curr.trim().split(":");
+    acc[cookieValue[0]] = getConsentStateForCategory(cookieValue[1]);
+    return acc;
+  }, {});
+
+  updateConsentState({
+    ad_storage: cookieObj.advertisement,
+    analytics_storage: cookieObj.analytics,
+    functionality_storage: cookieObj.functional,
+    personalization_storage: cookieObj.functional,
+    security_storage: cookieObj.necessary,
+    ad_user_data: cookieObj.advertisement,
+    ad_personalization: cookieObj.advertisement,
+  });
+}
+
+let scriptURL =
+  "https://cdn.cookiepal.io/client_data/" +
+  encodeUri(data.websiteKey + "/script.js?source=gtm");
+
+if (!queryPermission("inject_script", scriptURL)) return data.gtmOnFailure();
+injectScript(scriptURL, data.gtmOnSuccess, data.gtmOnFailure);
 
 
 ___WEB_PERMISSIONS___
@@ -498,61 +348,6 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://cdn.cookiepal.io/client_data/*"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "clientAnnotations": {
-      "isEditedByUser": true
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
-        "publicId": "logging",
-        "versionId": "1"
-      },
-      "param": [
-        {
-          "key": "environments",
-          "value": {
-            "type": 1,
-            "string": "debug"
-          }
-        }
-      ]
-    },
-    "clientAnnotations": {
-      "isEditedByUser": true
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
-        "publicId": "write_data_layer",
-        "versionId": "1"
-      },
-      "param": [
-        {
-          "key": "keyPatterns",
-          "value": {
-            "type": 2,
-            "listItem": [
-              {
-                "type": 1,
-                "string": "ads_data_redaction"
-              },
-              {
-                "type": 1,
-                "string": "url_passthrough"
-              },
-              {
-                "type": 1,
-                "string": "developer_id.dMDc2ZT"
               }
             ]
           }
@@ -657,7 +452,7 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "functionality_storage"
+                    "string": "functional_storage"
                   },
                   {
                     "type": 8,
@@ -750,6 +545,68 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
+                    "string": "functionality_storage"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "consentType"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "wait_for_update"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "consentType"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
                     "string": "ad_user_data"
                   },
                   {
@@ -806,10 +663,64 @@ ___WEB_PERMISSIONS___
   {
     "instance": {
       "key": {
-        "publicId": "access_globals",
+        "publicId": "write_data_layer",
         "versionId": "1"
       },
-      "param": []
+      "param": [
+        {
+          "key": "keyPatterns",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "ads_data_redaction"
+              },
+              {
+                "type": 1,
+                "string": "url_passthrough"
+              },
+              {
+                "type": 1,
+                "string": "developer_id.dMDc2ZT"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "get_cookies",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "cookieAccess",
+          "value": {
+            "type": 1,
+            "string": "specific"
+          }
+        },
+        {
+          "key": "cookieNames",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "cookiepal-consent"
+              }
+            ]
+          }
+        }
+      ]
     },
     "clientAnnotations": {
       "isEditedByUser": true
@@ -826,4 +737,4 @@ scenarios: []
 
 ___NOTES___
 
-Created on 29/06/2022, 23:29:56
+Created on 21/09/2025, 19:00:00
