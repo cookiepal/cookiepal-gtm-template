@@ -1,7 +1,7 @@
 homepage: "https://cookiepal.io/"
 documentation: "https://cookiepal.io/installation-guides"
 versions:
-  - sha: c96fa68f0410eb2fe7b60952a6cf57b8b031d17f
+  - sha: cc9e9bdef205b37516db230038eb08e412588a32
     changeNotes: Update template with update command during initialisation
   - sha: f1f05b369ddb3ca81fb5f07725bf233c539c3588
     changeNotes: Change logic to detect script installation
