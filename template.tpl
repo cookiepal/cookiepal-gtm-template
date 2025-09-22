@@ -1,4 +1,4 @@
-﻿﻿___TERMS_OF_SERVICE___
+﻿___TERMS_OF_SERVICE___
 
 By creating or modifying this file you agree to Google Tag Manager's Community
 Template Gallery Developer Terms of Service available at
@@ -10,9 +10,8 @@ ___INFO___
 
 {
   "type": "TAG",
-  "id": "cvt_temp_public_id",
+  "id": "cvt_P8Q7H",
   "version": 1,
-  "securityGroups": [],
   "displayName": "CookiePal CMP",
   "categories": [
     "TAG_MANAGEMENT",
@@ -26,7 +25,8 @@ ___INFO___
   "description": "CookiePal is a comprehensive and user-friendly Consent Management Platform (CMP) that offers all the necessary tools to ensure your website complies with GDPR.",
   "containerContexts": [
     "WEB"
-  ]
+  ],
+  "securityGroups": []
 }
 
 
@@ -38,7 +38,7 @@ ___TEMPLATE_PARAMETERS___
     "name": "websiteId",
     "displayName": "Website Id",
     "simpleValueType": true,
-    "help": "The website id of your cookiepal account.",
+    "help": "Log in to your CookiePal account > On the Dashboard, select the correct site (if you have more than one) > In the left menu, click Settings > Click Copy Website ID",
     "notSetText": "This field is required.",
     "valueValidators": [
       {
@@ -91,23 +91,6 @@ ___TEMPLATE_PARAMETERS___
         "type": "RADIO",
         "name": "defaultAnalytics",
         "displayName": "Analytics",
-        "radioItems": [
-          {
-            "value": "granted",
-            "displayValue": "Granted"
-          },
-          {
-            "value": "denied",
-            "displayValue": "Denied"
-          }
-        ],
-        "simpleValueType": true,
-        "defaultValue": "denied"
-      },
-      {
-        "type": "RADIO",
-        "name": "defaultPerformance",
-        "displayName": "Performance",
         "radioItems": [
           {
             "value": "granted",
@@ -177,172 +160,9 @@ ___TEMPLATE_PARAMETERS___
   {
     "type": "GROUP",
     "name": "customSettings",
-    "displayName": "Custom Settings",
+    "displayName": "Settings",
     "groupStyle": "ZIPPY_CLOSED",
     "subParams": [
-      {
-        "type": "PARAM_TABLE",
-        "name": "customRegions",
-        "displayName": "",
-        "paramTableColumns": [
-          {
-            "param": {
-              "type": "TEXT",
-              "name": "region",
-              "displayName": "Region",
-              "simpleValueType": true
-            },
-            "isUnique": true
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customNecessary",
-              "displayName": "Necessary",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "granted"
-            },
-            "isUnique": false
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customFunctional",
-              "displayName": "Functional",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "denied"
-            },
-            "isUnique": false
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customAnalytics",
-              "displayName": "Analytics",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "denied"
-            },
-            "isUnique": false
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customPerformance",
-              "displayName": "Performance",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "denied"
-            },
-            "isUnique": false
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customAdvertisement",
-              "displayName": "Advertisement",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "denied"
-            },
-            "isUnique": false
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customAdUserData",
-              "displayName": "Sending user data related to advertising to Google (ad_user_data)",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "denied"
-            },
-            "isUnique": false
-          },
-          {
-            "param": {
-              "type": "SELECT",
-              "name": "customAdPersonalization",
-              "displayName": "Personalized advertising (ad_personalization)",
-              "macrosInSelect": false,
-              "selectItems": [
-                {
-                  "value": "granted",
-                  "displayValue": "Granted"
-                },
-                {
-                  "value": "denied",
-                  "displayValue": "Denied"
-                }
-              ],
-              "simpleValueType": true,
-              "defaultValue": "denied"
-            },
-            "isUnique": false
-          }
-        ]
-      },
       {
         "type": "TEXT",
         "name": "waitMs",
@@ -379,105 +199,143 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-// APIs
-const JSON = require('JSON');
-const encodeUri = require("encodeUri");
-const logToConsole = require('logToConsole');
-const injectScript = require('injectScript');
-const queryPermission = require('queryPermission');
-const setDefaultConsentState = require('setDefaultConsentState');
-const gtagSet = require('gtagSet');
-const setInWindow = require('setInWindow');
-const callInWindow = require('callInWindow');
-const waitForTime = data.waitMs;
+/**
+ * CookiePal – Google Tag Manager Template
+ * ---------------------------------------
+ * Responsibilities:
+ * 1) Configure gtag defaults (ads_data_redaction, url_passthrough, developer_id)
+ * 2) Set default consent states with an optional wait_for_update
+ * 3) Read the "cookiepal-consent" cookie and update consent at runtime
+ * 4) Inject the CookiePal client script
+ */
 
-// Helpers
-const splitInput = (input) => {
-  return input.split(',')
-    .map(entry => entry.trim())
-    .filter(entry => entry.length !== 0);
-};
+// ───────────────────────────────────────────────────────────────────────────────
+// GTM Template APIs
+// ───────────────────────────────────────────────────────────────────────────────
+var JSON = require('JSON');
+var encodeUri = require('encodeUri');
+var logToConsole = require('logToConsole');
+var injectScript = require('injectScript');
+var getCookieValues = require('getCookieValues');
+var queryPermission = require('queryPermission');
+var setDefaultConsentState = require('setDefaultConsentState');
+var updateConsentState = require('updateConsentState');
+var gtagSet = require('gtagSet');
 
-const getChoice = (choice) => choice === 'granted' ? 'granted' : 'denied';
+// ───────────────────────────────────────────────────────────────────────────────
+// Configuration & Inputs
+// ───────────────────────────────────────────────────────────────────────────────
+var WEBSITE_ID = data.websiteId;
+var WAIT_MS = data.waitMs ? (data.waitMs * 1) : 0;
 
-// Get settings from user input
-const websiteId = data.websiteId;
-const customRegions = data.customRegions;
-logToConsole('Data is',data);
-logToConsole('Custom regions',customRegions);
-
-// Set gtag 
+// gtag configuration
 gtagSet({
   ads_data_redaction: !!data.adsRedaction,
   url_passthrough: !!data.urlPassThrough,
   'developer_id.dMDc2ZT': true
 });
 
-const defaultConsentState = {
-    'security_storage': getChoice(data.defaultNecessary),
-    'functionality_storage': getChoice(data.defaultFunctional),
-    'personalization_storage': getChoice(data.defaultFunctional),
-    'analytics_storage': getChoice(data.defaultAnalytics),
-    'ad_storage': getChoice(data.defaultAdvertisement),
-    'ad_user_data': getChoice(data.adUserData),
-    'ad_personalization': getChoice(data.adPersonalization),
-  };
+// ───────────────────────────────────────────────────────────────────────────────
+// helpers
+// ───────────────────────────────────────────────────────────────────────────────
 
-const setDefaultConsentStateFn = (defaultConsentState) => {
-  const updatedConsentState = JSON.parse(JSON.stringify(defaultConsentState));
-  if (waitForTime > 0)  updatedConsentState.wait_for_update = waitForTime;
-  setDefaultConsentState(updatedConsentState);
-};
-
-if (customRegions)
-  {
-    customRegions.forEach(currentRegion => {
-      logToConsole('Current region',currentRegion);
-      const region = splitInput(currentRegion.region);
-      if (region.length > 0) {
-        const defaultRegionConsentState = {
-        'security_storage': getChoice(currentRegion.customNecessary),
-          'functionality_storage': getChoice(currentRegion.customFunctional),
-          'personalization_storage': getChoice(currentRegion.customFunctional),
-          'analytics_storage': getChoice(currentRegion.customAnalytics),
-          'ad_storage': getChoice(currentRegion.customAdvertisement),
-          'ad_user_data': getChoice(currentRegion.customAdUserData),
-          'ad_personalization': getChoice(currentRegion.customAdPersonalization),
-          'region': region
-        };
-        logToConsole('Inserting',defaultRegionConsentState,' on region ',region);
-        setDefaultConsentStateFn(defaultRegionConsentState);
-      }
-      
-    });
-  } 
-
-logToConsole('Global default consent state is',defaultConsentState);
-// Set global default consent state
-setDefaultConsentStateFn(defaultConsentState);
-
-// If the script loaded successfully, log a message and signal success
-const onSuccess = () => {
-  logToConsole('Script loaded successfully.');
-  data.gtmOnSuccess();
-};
-
-// If the script fails to load, log a message and signal failure
-const onFailure = () => {
-  logToConsole('Script load failed.');
-  data.gtmOnFailure();
-};
-
-// Inject the script with the onSuccess and onFailure methods as callbacks
-const url = 'https://cdn.cookiepal.io/client_data/' + encodeUri(websiteId + '/script.js?source=gtm');
-
-if (queryPermission('inject_script', url)) {
-  injectScript(url, onSuccess, onFailure);
-  return;
+/**
+ * Normalize consent choices coming from template inputs to "granted"/"denied".
+ */
+function asConsent(choice) {
+  return choice === 'granted' ? 'granted' : 'denied';
 }
 
-logToConsole('Script load failed due to permissions mismatch.');
-data.gtmOnFailure();
+/**
+ * Map a "yes"/other token (from cookie) to gtag's consent value.
+ */
+function yesNoToConsent(token) {
+  var t = (token + '').toLowerCase();
+  return t === 'yes' ? 'granted' : 'denied';
+}
+
+// ───────────────────────────────────────────────────────────────────────────────
+// 2) Global default consent
+// ───────────────────────────────────────────────────────────────────────────────
+var GLOBAL_DEFAULTS = {
+  security_storage:        asConsent(data.defaultNecessary),
+  functionality_storage:   asConsent(data.defaultFunctional),
+  personalization_storage: asConsent(data.defaultFunctional),
+  analytics_storage:       asConsent(data.defaultAnalytics),
+  ad_storage:              asConsent(data.defaultAdvertisement),
+  ad_user_data:            asConsent(data.adUserData),
+  ad_personalization:      asConsent(data.adPersonalization)
+};
+if (WAIT_MS > 0) GLOBAL_DEFAULTS.wait_for_update = WAIT_MS;
+
+logToConsole('[CookiePal] Applying global default consent', GLOBAL_DEFAULTS);
+setDefaultConsentState(GLOBAL_DEFAULTS);
+
+// ───────────────────────────────────────────────────────────────────────────────
+/* 3) updateConsentState from the "cookiepal-consent" cookie
+    Only read if 'get_cookies' permission is granted.
+
+    Mapping:
+      ad_storage               <- advertisement
+      analytics_storage        <- analytics
+      functionality_storage    <- functional
+      personalization_storage  <- functional
+      security_storage         <- necessary
+      ad_user_data             <- advertisement
+      ad_personalization       <- advertisement
+*/
+// ───────────────────────────────────────────────────────────────────────────────
+var cookieName = 'cookiepal-consent';
+if (queryPermission('get_cookies', cookieName)) {
+  var consentString = getCookieValues(cookieName)[0];
+  if (consentString && typeof consentString === 'string') {
+    var cookieObj = consentString.split(',').reduce(function (acc, curr) {
+      var kv = (curr || '').trim().split(':');
+      var key = kv[0];
+      var val = kv[1];
+      acc[key] = yesNoToConsent(val);
+      return acc;
+    }, {});
+
+    var payload = {
+      ad_storage:              cookieObj.advertisement,
+      analytics_storage:       cookieObj.analytics,
+      functionality_storage:   cookieObj.functional,
+      personalization_storage: cookieObj.functional,
+      security_storage:        cookieObj.necessary,
+      ad_user_data:            cookieObj.advertisement,
+      ad_personalization:      cookieObj.advertisement
+    };
+
+    logToConsole('[CookiePal] Updating consent from cookie', payload);
+    updateConsentState(payload);
+  }
+}
+
+// ───────────────────────────────────────────────────────────────────────────────
+// 4) Inject the CookiePal client script
+// ───────────────────────────────────────────────────────────────────────────────
+(function injectClient() {
+  var url = 'https://cdn.cookiepal.io/client_data/' + encodeUri(WEBSITE_ID + '/script.js?source=gtm');
+
+  function onSuccess() {
+    logToConsole('[CookiePal] Client script loaded successfully.');
+    data.gtmOnSuccess();
+  }
+
+  function onFailure() {
+    logToConsole('[CookiePal] Client script failed to load.');
+    data.gtmOnFailure();
+  }
+
+  if (!queryPermission('inject_script', url)) {
+    logToConsole('[CookiePal] Permission denied for script injection:', url);
+    onFailure();
+    return;
+  }
+
+  injectScript(url, onSuccess, onFailure);
+})();
 
 
 ___WEB_PERMISSIONS___
@@ -806,10 +664,30 @@ ___WEB_PERMISSIONS___
   {
     "instance": {
       "key": {
-        "publicId": "access_globals",
+        "publicId": "get_cookies",
         "versionId": "1"
       },
-      "param": []
+      "param": [
+        {
+          "key": "cookieAccess",
+          "value": {
+            "type": 1,
+            "string": "specific"
+          }
+        },
+        {
+          "key": "cookieNames",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "cookiepal-consent"
+              }
+            ]
+          }
+        }
+      ]
     },
     "clientAnnotations": {
       "isEditedByUser": true
@@ -826,4 +704,6 @@ scenarios: []
 
 ___NOTES___
 
-Created on 29/06/2022, 23:29:56
+Created on 22/09/2025, 09:30:00
+
+
