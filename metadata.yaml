@@ -1,6 +1,8 @@
 homepage: "https://cookiepal.io/"
-documentation: "https://cookiepal.io/installation-guides"
+documentation: "https://cookiepal.io/help-guide/installation/integrate-cookiepal-with-google-tag-manager"
 versions:
+  - sha: 2b61c8a40a366906b5583fa417df54312f4cc153
+    changeNotes: Update template with update command during initialisation
   - sha: f1f05b369ddb3ca81fb5f07725bf233c539c3588
     changeNotes: Change logic to detect script installation
   - sha: 5282ca8b959560d7925f6a624fcc8676abaead22
