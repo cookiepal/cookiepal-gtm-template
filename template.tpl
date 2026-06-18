@@ -160,9 +160,117 @@ ___TEMPLATE_PARAMETERS___
   {
     "type": "GROUP",
     "name": "customSettings",
-    "displayName": "Settings",
+    "displayName": "Custom Settings",
     "groupStyle": "ZIPPY_CLOSED",
     "subParams": [
+      {
+        "type": "PARAM_TABLE",
+        "name": "customRegions",
+        "displayName": "Region-specific default values",
+        "help": "Override the global default values above for specific regions. Use ISO 3166 country (e.g. DE) or country-region (e.g. US-CA) codes. Comma-separate multiple codes in one row. Each row is applied as a region-scoped default and takes precedence over the global defaults for matching regions.",
+        "paramTableColumns": [
+          {
+            "param": {
+              "type": "TEXT",
+              "name": "region",
+              "displayName": "Region",
+              "simpleValueType": true,
+              "valueHint": "e.g. DE, FR, US-CA"
+            },
+            "isUnique": true
+          },
+          {
+            "param": {
+              "type": "SELECT",
+              "name": "customNecessary",
+              "displayName": "Necessary",
+              "macrosInSelect": false,
+              "selectItems": [
+                { "value": "granted", "displayValue": "Granted" },
+                { "value": "denied", "displayValue": "Denied" }
+              ],
+              "simpleValueType": true,
+              "defaultValue": "granted"
+            },
+            "isUnique": false
+          },
+          {
+            "param": {
+              "type": "SELECT",
+              "name": "customFunctional",
+              "displayName": "Functional",
+              "macrosInSelect": false,
+              "selectItems": [
+                { "value": "granted", "displayValue": "Granted" },
+                { "value": "denied", "displayValue": "Denied" }
+              ],
+              "simpleValueType": true,
+              "defaultValue": "denied"
+            },
+            "isUnique": false
+          },
+          {
+            "param": {
+              "type": "SELECT",
+              "name": "customAnalytics",
+              "displayName": "Analytics",
+              "macrosInSelect": false,
+              "selectItems": [
+                { "value": "granted", "displayValue": "Granted" },
+                { "value": "denied", "displayValue": "Denied" }
+              ],
+              "simpleValueType": true,
+              "defaultValue": "denied"
+            },
+            "isUnique": false
+          },
+          {
+            "param": {
+              "type": "SELECT",
+              "name": "customAdvertisement",
+              "displayName": "Advertisement",
+              "macrosInSelect": false,
+              "selectItems": [
+                { "value": "granted", "displayValue": "Granted" },
+                { "value": "denied", "displayValue": "Denied" }
+              ],
+              "simpleValueType": true,
+              "defaultValue": "denied"
+            },
+            "isUnique": false
+          },
+          {
+            "param": {
+              "type": "SELECT",
+              "name": "customAdUserData",
+              "displayName": "Sending user data related to advertising to Google (ad_user_data)",
+              "macrosInSelect": false,
+              "selectItems": [
+                { "value": "granted", "displayValue": "Granted" },
+                { "value": "denied", "displayValue": "Denied" }
+              ],
+              "simpleValueType": true,
+              "defaultValue": "denied"
+            },
+            "isUnique": false
+          },
+          {
+            "param": {
+              "type": "SELECT",
+              "name": "customAdPersonalization",
+              "displayName": "Personalized advertising (ad_personalization)",
+              "macrosInSelect": false,
+              "selectItems": [
+                { "value": "granted", "displayValue": "Granted" },
+                { "value": "denied", "displayValue": "Denied" }
+              ],
+              "simpleValueType": true,
+              "defaultValue": "denied"
+            },
+            "isUnique": false
+          }
+        ]
+      },
       {
         "type": "TEXT",
         "name": "waitMs",
@@ -270,6 +378,37 @@ if (WAIT_MS > 0) GLOBAL_DEFAULTS.wait_for_update = WAIT_MS;
 
 logToConsole('[CookiePal] Applying global default consent', GLOBAL_DEFAULTS);
 setDefaultConsentState(GLOBAL_DEFAULTS);
+
+// ───────────────────────────────────────────────────────────────────────────────
+// 2b) Region-specific default consent overrides (data.customRegions)
+//     Each row sets a region-scoped default that takes precedence over the
+//     global defaults for the listed regions.
+// ───────────────────────────────────────────────────────────────────────────────
+var customRegions = data.customRegions || [];
+for (var ri = 0; ri < customRegions.length; ri++) {
+  var currentRegion = customRegions[ri];
+  var region = (currentRegion.region || '').split(',').map(function (s) {
+    return s.trim();
+  }).filter(function (s) {
+    return s.length !== 0;
+  });
+  if (region.length === 0) continue;
+
+  var REGION_DEFAULTS = {
+    security_storage:        asConsent(currentRegion.customNecessary),
+    functionality_storage:   asConsent(currentRegion.customFunctional),
+    personalization_storage: asConsent(currentRegion.customFunctional),
+    analytics_storage:       asConsent(currentRegion.customAnalytics),
+    ad_storage:              asConsent(currentRegion.customAdvertisement),
+    ad_user_data:            asConsent(currentRegion.customAdUserData),
+    ad_personalization:      asConsent(currentRegion.customAdPersonalization),
+    region:                  region
+  };
+  if (WAIT_MS > 0) REGION_DEFAULTS.wait_for_update = WAIT_MS;
+
+  logToConsole('[CookiePal] Applying region default consent', region, REGION_DEFAULTS);
+  setDefaultConsentState(REGION_DEFAULTS);
+}
 
 // ───────────────────────────────────────────────────────────────────────────────
 /* 3) updateConsentState from the "cookiepal-consent" cookie

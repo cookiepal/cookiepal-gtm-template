@@ -1,6 +1,8 @@
 homepage: "https://cookiepal.io/"
 documentation: "https://cookiepal.io/help-guide/installation/integrate-cookiepal-with-google-tag-manager"
 versions:
+  - sha: bc7c7b1f1998ca773caa8a62922a2a87fc4248db
+    changeNotes: Add region-specific default consent settings
   - sha: 2b61c8a40a366906b5583fa417df54312f4cc153
     changeNotes: Update template with update command during initialisation
   - sha: f1f05b369ddb3ca81fb5f07725bf233c539c3588
